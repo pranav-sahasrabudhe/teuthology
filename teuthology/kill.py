@@ -177,8 +177,8 @@ def kill_processes(run_name, pids=None):
             # Don't attempt to use sudo if it's not necessary
             proc_user = psutil.Process(int(pid)).username()
             if proc_user != getpass.getuser():
-                args.insert(0, 'sudo')
-            subprocess.call(args)
+                args = ['sudo', '-n'] + args
+            subprocess.check_call(args)
 
 
 def process_matches_run(pid, run_name):

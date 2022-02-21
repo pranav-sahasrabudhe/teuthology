@@ -74,7 +74,7 @@ Create an ``/etc/teuthology.yaml`` that looks like::
     results_email: you@example.com
     archive_base: /home/teuthworker/archive
 
-Do the following as root or as another user with sudo access:
+Do the following as root or as another user (e.g. ubuntu user) with sudo access:
 
 Create two additional users: one that simply submits jobs to the queue, and
 another that picks them up from the queue and executes them. We use
@@ -82,8 +82,12 @@ another that picks them up from the queue and executes them. We use
 
 Give both users passwordless sudo access.
 
+Steps:
+    <TBU>
+
 Copy the ssh key pair that you created to access the test nodes into each of
 these users' ``~/.ssh`` directory.
+    ` ssh-copy-id `
 
 Install these packages::
 

@@ -9,7 +9,7 @@ Introduction
 
 We recently set up a new lab for Ceph testing and decided to document the parts of the process that are most relevant to teuthology. This is the result.
 
-We started by setting aside two of the test machines: one as the 'teuthology node', and another as the 'paddles/pulpito node'. These would be used to orchestrate automated testing and to store and serve the results on our intranet.
+We started by setting aside two of the test machines: one as the 'teuthology node', and another as the 'paddles/pulpito node'. These would be used to orchestrate automated testing and to store and serve the results on intranet.
 
 paddles/pulpito node
 ====================
@@ -18,7 +18,7 @@ We're currently running both paddles and pulpito on the same node. We have a pro
 
 Do the following as root or as another user with sudo access::
 
-    sudo apt-get install git python-dev python-virtualenv postgresql postgresql-contrib postgresql-server-dev-all supervisor
+    sudo apt-get install git python3-dev python3-virtualenv postgresql postgresql-contrib postgresql-server-dev-all supervisor
     sudo -u postgres createuser paddles -P
     sudo -u postgres createdb paddles
 
@@ -40,9 +40,9 @@ Starting up
 
 Back as the 'root or sudo' user::
 
-    sudo cp ~paddles/paddles/supervisord_paddles.conf /etc/supervisor/conf.d/paddles.conf
+    sudo cp ~/paddles/supervisord_paddles.conf /etc/supervisor/conf.d/paddles.conf
     sudo supervisorctl reread && sudo supervisorctl update paddles && sudo supervisorctl start paddles
-    sudo cp ~pulpito/pulpito/supervisord_pulpito.conf /etc/supervisor/conf.d/pulpito.conf
+    sudo cp ~/pulpito/supervisord_pulpito.conf /etc/supervisor/conf.d/pulpito.conf
     sudo supervisorctl reread && sudo supervisorctl update pulpito && sudo supervisorctl start pulpito
 
 
@@ -51,10 +51,15 @@ Test Nodes
 
 Each node needs to have a user named 'ubuntu' with passwordless sudo access.
 
-It's also necessary to generate an ssh key pair that will be used to provide
+Steps:
+    <TBU>
+    
+It's also necessary to generate an ssh key pair (common) that will be used to provide
 passwordless authentication to all the test nodes, and put the public key in
 ``~/.ssh/authorized_keys`` on all the test nodes.
 
+Steps:
+    <TBU>
 
 Teuthology Node
 ===============
@@ -82,14 +87,14 @@ these users' ``~/.ssh`` directory.
 
 Install these packages::
 
-    sudo apt-get -y install git python-dev python-pip python-virtualenv libevent-dev python-libvirt beanstalkd
+    sudo apt-get -y install git python-dev python3-pip python3-virtualenv libevent-dev python3-libvirt beanstalkd
 
 Now, set up the two users you just created:
 
 
 Scheduler
 ---------
-As 'teuthology', do the following::
+As 'teuthology' user, do the following::
 
     mkdir ~/src
     git clone https://github.com/ceph/teuthology.git src/teuthology_master
@@ -100,7 +105,7 @@ As 'teuthology', do the following::
 
 Worker
 ------
-As 'teuthworker', do the following::
+As 'teuthworker' user, do the following::
 
     mkdir ~/src
     git clone https://github.com/ceph/teuthology.git src/teuthology_master
@@ -112,6 +117,7 @@ As 'teuthworker', do the following::
     echo 'PATH="$HOME/src/teuthology_master/virtualenv/bin:$PATH"' >> ~/.profile
     source ~/.profile
     mkdir -p ~/archive/worker_logs
+    chmod +x /home/teuthworker/bin/worker_start
     worker_start magna 1
 
 

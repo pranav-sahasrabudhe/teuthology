@@ -35,8 +35,8 @@ pulpito
 Follow instructions at https://github.com/ceph/pulpito/blob/master/README.rst
 
 
-Starting up
------------
+Starting up Paddles/Pulpito
+---------------------------
 
 Back as the 'root or sudo' user::
 

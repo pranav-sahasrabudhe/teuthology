@@ -59,7 +59,6 @@ def fetch_tasks_if_needed(job_config):
     """
     Fetch the suite repo (and include it in sys.path) so that we can use its
     tasks.
-
     Returns the suite_path. The existing suite_path will be returned if the
     tasks can be imported, if not a new suite_path will try to be determined.
     """
@@ -88,9 +87,10 @@ def fetch_tasks_if_needed(job_config):
     suite_sha1 = job_config.get('suite_sha1')
     suite_path = os.path.normpath(os.path.join(
         fetch_qa_suite(suite_branch, commit=suite_sha1),
-        job_config.get('suite_relpath', ''),
+        job_config.get('suite_relpath', 'qa'),
     ))
     sys.path.insert(1, suite_path)
+    import tasks
     return suite_path
 
 
@@ -146,7 +146,6 @@ def get_summary(owner, description):
 def validate_tasks(config):
     """
     Ensures that config tasks is a list and doesn't include 'kernel'.
-
     Returns the original tasks key if found.  If not, returns an
     empty list.
     """
